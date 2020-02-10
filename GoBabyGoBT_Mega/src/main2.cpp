@@ -55,8 +55,7 @@ Preprocessor Defines
 Variables
 */
 
-//AltSoftSerial Serial/Bluetooth stuff
-/*
+/* AltSoftSerial Serial/Bluetooth stuff
 Board          TX  RX
 Arduino Uno    9   8 
 Arduino Mega   46  48
@@ -115,6 +114,7 @@ typedef struct GoPacket_t
 
 } GoPacket;
 
+
 /*
 Helper functions
 */
@@ -164,32 +164,19 @@ void printByteArray(byte bytearr[], size_t length)
 // Code complexity should be
 // MINIMAL in interrupt!
 // Long running code in interrupt can cause timing issues
-void BT_ACK_Interrupt()
-{
-  receivedAck = false;
-}
-
 // If we haven't received a packet with an ACK = 1
 // then stop the motors
-void mainHandleISR()
+void BT_ACK_Interrupt()
 {
   noInterrupts();
   main_acked = receivedAck;
   interrupts();
-
-  //   Serial.println(main_acked);
-
-  if (main_acked == false)
-  {
-    Serial.println("Safety: Stopping Motors");
-    // send stop command: 0x00 to motor controller
-  }
 }
 
 // ask about how to properly handle isr
 // problem of knowing that we've not gotten
 // a packet/bluetooth has disconnected from Arduino perspective
-uint16_t safetyTimer = 500; // in milliseconds
+uint16_t safetyTimer = 350; // in milliseconds
 bool stopMotors = false;
 void safetyIsrMotors()
 {
@@ -203,6 +190,7 @@ void safetyIsrMotors()
     }
     else if (main_acked == false)
     {
+      // If we haven't stopped the motors, STOP them now
       if (stopMotors == false)
       {
         Serial.println("Safety: Stopping Motors");
@@ -212,29 +200,11 @@ void safetyIsrMotors()
       }
     }
 
+    // Set the main ACK to false for safety stop of Motors
     main_acked = false;
   }
 }
 
-void packetTest1()
-{
-  byte bytes[] =
-      {
-          0x01,
-          0x03,
-          0x0, 0x0, 0x0, 0x0,
-          0x01,
-          0x08,
-          0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-          0x04};
-
-  Serial.print(time_now / 1000);
-  Serial.print(" - ");
-
-  PrintHex83(bytes, sizeof(bytes));
-
-  Bluetooth.write(bytes, sizeof(bytes));
-}
 
 void packetTest2()
 {
@@ -242,6 +212,7 @@ void packetTest2()
   byte packet_data[p_MAXDataLength] = {7, 7, 7, 7};
 
   GoPacket packet;
+
   /* Comment when ACTUALLY USING; outgoing: ack should ALWAYS be false*/
   packet.ack = false;
   packet.id = 3;
@@ -249,14 +220,12 @@ void packetTest2()
   memcpy(packet.data, packet_data, sizeof(packet.data));
   packet.data_size_in_bytes = sizeof(packet_data);
 
-  byte *packet_bytes = (byte *)&packet;
+  byte* packet_bytes = (byte *)&packet;
   // packet_checksum = CRC32::calculate(byteArray, sizeof(packet));
   packet.crc32_chksum = packet_checksum;
 
   // Serial.print(time_now / 1000); Serial.print(" - ");
-
   // Serial.println(sizeof(packet));
-
   // printByteArray(packet_bytes, sizeof(packet));
 
   // Example Packet
@@ -264,17 +233,16 @@ void packetTest2()
   Bluetooth.write(packet_bytes, sizeof(packet));
 }
 
+
 void sendArduinoPacket()
 {
   if (millis() > time_now + period)
   {
     time_now = millis();
-
-    // packetTest1();
-
     packetTest2();
   }
 }
+
 
 // Todo:
 void sendHardwareStatus()
@@ -388,7 +356,7 @@ void bluetoothStateMachine()
   if (Bluetooth.available() > 0)
   {
     incomingByte = Bluetooth.read();
-    // Serial.println(incomingByte);
+    Serial.println(incomingByte);
 
     switch (state)
     {
@@ -551,11 +519,11 @@ void setup()
 
 void loop()
 {
-  // handle isr: safety measures for stopping car if not acked
-  safetyIsrMotors();
-
   // bluetooth state-machine read data/messages
   bluetoothStateMachine();
+
+  // handle isr: safety measures for stopping car if not acked
+  safetyIsrMotors();
 
   // send status of hardware to phone
   sendHardwareStatus();
