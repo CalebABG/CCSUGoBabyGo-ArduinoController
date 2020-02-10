@@ -1,0 +1,57 @@
+18:45:01.354 -> *** SET COMMANDS ***
+18:45:01.354 -> SA,<3,0>   - Authentication
+18:45:01.354 -> SC,<hex>   - Service Class
+18:45:01.354 -> SD,<hex>   - Device Class
+18:45:01.354 -> SE,<1-16>  - UUID
+18:45:01.354 -> SF,1       - Factory Defaults
+18:45:01.354 -> SH,<hex>   - HID flags
+18:45:01.354 -> SI,<hex>   - Inquiry Scan Window
+18:45:01.354 -> SJ,<hex>   - Page Scan Window
+18:45:01.354 -> SL,<E,O,N> - Parity
+18:45:01.354 -> SM,<0-5>   - Mode (0=slav,1=mstr,2=trig,3=auto,4=DTR,5=Any)
+18:45:01.354 -> SN,<name>  - Name
+18:45:01.354 -> SO,<text>  - conn/discon Status
+18:45:01.354 -> SP,<text>  - Pin Code
+18:45:01.354 -> SR,<adr>   - Remote Address
+18:45:01.354 -> SS,<text>  - Service Name
+18:45:01.354 -> ST,<num>   - Config Timer
+18:45:01.354 -> SU,<rate>  - Baudrate
+18:45:01.354 -> SW,<hex>   - Sniff Rate
+18:45:01.354 -> SX,<1,0>   - Bonding
+18:45:01.354 -> SY,<hex>   - TX power
+18:45:01.354 -> SZ,<num>   - Raw Baudrate
+18:45:01.354 -> S~,<0-6>   - Profile (0=SPP,1=DCE,2=DTE,3=MDM,4=D&S,6=HID
+18:45:01.354 -> S?,<0-1>   - role switch
+18:45:01.354 -> S$,<char>  - CMD mode char
+18:45:01.354 -> S@,<hex>   - io port dir
+18:45:01.354 -> S&,<hex>   - io port val
+18:45:01.354 -> S%,<hex>   - io boot dir
+18:45:01.354 -> S^,<hex>   - io boot val
+18:45:01.354 -> S*,<hex>   - pio(8-11) set
+18:45:01.354 -> S|,<hex>   - low power timers
+18:45:01.354 -> S+,<num>   - DTR timer
+18:45:01.354 -> S=,<hex>   - Key mapper
+18:45:01.354 -> S:,<num>   - sleep timer
+18:45:01.354 -> *** DISPLAY      ***
+18:45:01.354 -> D     - Basic Settings
+18:45:01.354 -> E     - Extended Settings
+18:45:01.354 -> G<X>  - Stored setting
+18:45:01.354 -> GB    - BT Address
+18:45:01.354 -> GF    - BT Address of Last Connection
+18:45:01.354 -> GK    - Connect Status
+18:45:01.354 -> G&    - I/O Ports
+18:45:01.354 -> V     - Firmare version
+18:45:01.354 -> *** OTHER        ***
+18:45:01.354 -> C,<adr>    - Connect
+18:45:01.354 -> F,1        - Fast Mode
+18:45:01.354 -> I,<time>,<cod> - Device Scan Inquiry
+18:45:01.354 -> J          - Hide Pin Code
+18:45:01.354 -> K,         - Kill (disconnect)
+18:45:01.354 -> L,         - toggle local echo
+18:45:01.354 -> P,<text>   - Pass Thru
+18:45:01.354 -> Q          - Quiet (no discovery)
+18:45:01.354 -> R,1        - Reboot
+18:45:01.354 -> T,<0,1>    - send data in CMD mode
+18:45:01.354 -> U,<rate>,<E,O,N> - Temp Uart Change
+18:45:01.354 -> Z          - low power sleep
+18:45:01.354 -> &          - Read switches
