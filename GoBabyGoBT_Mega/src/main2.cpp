@@ -310,7 +310,7 @@ void processSensorData(byte data[])
 {
   /*
     Index     0:      Packet START Byte
-    Index     1:      Packet ID
+    Index     1:      Packet ID (Type of Packet)
     Indexes   2-5:    Packet Checksum
     Index     6:      Packet ACK Byte
     Index     7:      Packet Data Length (in Bytes)
@@ -438,7 +438,7 @@ void bluetoothStateMachine()
       break;
 
     case 16:     // 17th Byte (End of packet: 0x04)
-      state = 0; // Go back to state 0 to look for a new packet
+      
 
       // handle state based on ID
       switch (packet_id)
@@ -457,6 +457,9 @@ void bluetoothStateMachine()
         break;
       } // end of switch
 
+      // Go back to state 0 to look for a new packet
+      state = 0;
+      
       // reset packet_checksum
       packet_checksum = 0;
       break;
