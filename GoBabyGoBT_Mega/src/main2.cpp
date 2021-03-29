@@ -309,7 +309,15 @@ uint32_t composeUInt32(byte byte1, byte byte2, byte byte3, byte byte4)
 void processSensorData(byte data[])
 {
   /*
-    Ex. Packet - indexes 2-5 are for checksum; indexes 7-15 are for data
+    Index     0:      Packet START Byte
+    Index     1:      Packet ID
+    Indexes   2-5:    Packet Checksum
+    Index     6:      Packet ACK Byte
+    Index     7:      Packet Data Length (in Bytes)
+    Index     8-15:   Packet Data
+    Index     16:     Packet END Byte
+    
+    Ex. Packet
     Index values are in HEX (ex. 0xff = 255) and (ex. 0x0f = 15)
     Index:    0     1     2     3     4     5     6     7     8     9     10     11     12     13     14     15     16
            {  01    03    ff    ff    ff    ff    01    08    01    02    03     04     05     06     07     08     04  }
