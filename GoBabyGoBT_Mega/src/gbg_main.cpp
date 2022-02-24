@@ -1,9 +1,6 @@
 #include <Arduino.h>
-
 #include <AltSoftSerial.h>
-
 #include <TimerOne.h>
-
 #include <CRC32.h>
 
 /* Clear FTDI-TTL-232R Cable
@@ -121,31 +118,6 @@ GoPacket;
 /*
 Helper functions
 */
-
-void PrintHex83(uint8_t * data, uint8_t length) // prints 8-bit data in hex
-{
-    char tmp[length * 2 + 1];
-    byte first;
-    int j = 0;
-    for (uint8_t i = 0; i < length; i++) {
-        first = (data[i] >> 4) | 48;
-        if (first > 57)
-            tmp[j] = first + (byte) 39;
-        else
-            tmp[j] = first;
-        j++;
-
-        first = (data[i] & 0x0F) | 48;
-        if (first > 57)
-            tmp[j] = first + (byte) 39;
-        else
-            tmp[j] = first;
-        j++;
-    }
-
-    tmp[length * 2] = 0;
-    Serial.println(tmp);
-}
 
 // Code complexity should be
 // MINIMAL in interrupt!
@@ -287,9 +259,8 @@ void processSensorData(byte data[]) {
       Index:    0     1     2     3     4     5     6     7     8     9     10     11     12     13     14     15     16
              {  01    03    ff    ff    ff    ff    01    08    01    02    03     04     05     06     07     08     04  }
     */
-    // Serial.println("SensorData State!");
 
-    //Serial.print("AccelXY: "); PrintHex83(data, sizeof(data));
+    // Serial.println("SensorData State!");
 
     last_ud = data[0];
     last_lr = data[1];
